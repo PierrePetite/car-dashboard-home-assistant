@@ -1,0 +1,441 @@
+views:
+  - title: Übersicht
+    cards:
+      - type: vertical-stack
+        cards:
+          - type: picture
+            image: /api/image/serve/dbad52eb232487e470857ed9c1157250/512x512
+          - type: horizontal-stack
+            cards:
+              - type: custom:mushroom-template-card
+                primary: Tank
+                secondary: '{{ states(''sensor.passat_fuel_level'') }}%'
+                icon: mdi:fuel
+                icon_color: |-
+                  {% if states('sensor.passat_fuel_level') | float > 30 %}
+                              green
+                            {% else %}
+                              red
+                            {% endif %}
+                entity: sensor.passat_fuel_level
+                tap_action:
+                  action: more-info
+              - type: custom:mushroom-template-card
+                primary: Reichweite
+                secondary: '{{ states(''sensor.passat_fuel_range'') }} km'
+                icon: mdi:map-marker-distance
+                icon_color: ''
+                entity: sensor.passat_fuel_range
+                tap_action:
+                  action: more-info
+          - type: custom:mushroom-template-card
+            primary: Trip
+            secondary: ''
+            icon: ''
+          - type: horizontal-stack
+            cards:
+              - type: custom:mushroom-template-card
+                primary: Dauer
+                secondary: '{{ states(''sensor.passat_last_trip_duration'') }} Min'
+                icon: mdi:timelapse
+                icon_color: ''
+                entity: sensor.passat_last_trip_duration
+                tap_action:
+                  action: more-info
+              - type: custom:mushroom-template-card
+                primary: Durchschn. Geschw.
+                secondary: '{{ states(''sensor.passat_last_trip_average_speed'') }} km/h'
+                icon: mdi:speedometer
+                entity: sensor.passat_last_trip_average_speed
+                tap_action:
+                  action: more-info
+          - type: horizontal-stack
+            cards:
+              - type: custom:mushroom-template-card
+                primary: Verbrauch
+                secondary: >-
+                  {{ states('sensor.passat_last_trip_average_fuel_consumption')
+                  }} l/100km
+                icon: mdi:gas-station-in-use
+                icon_color: >-
+                  {% if
+                  states('sensor.passat_last_trip_average_fuel_consumption') |
+                  float < 7 %}
+                              green
+                            {% else %}
+                              red
+                            {% endif %}
+                entity: sensor.passat_last_trip_average_fuel_consumption
+                tap_action:
+                  action: more-info
+              - type: custom:mushroom-template-card
+                primary: Distanz
+                secondary: '{{ states(''sensor.passat_last_trip_length'') }} km'
+                icon: mdi:map-marker-path
+                icon_color: ''
+                entity: sensor.passat_last_trip_length
+                tap_action:
+                  action: more-info
+          - type: horizontal-stack
+            cards:
+              - type: custom:mini-graph-card
+                entities:
+                  - entity: sensor.passat_last_trip_average_fuel_consumption
+                name: Verbrauch
+                group_by: date
+                hours_to_show: 168
+                animate: true
+                show:
+                  graph: bar
+              - type: custom:mini-graph-card
+                entities:
+                  - entity: sensor.passat_last_trip_length
+                name: Distanz
+                group_by: date
+                hours_to_show: 168
+                animate: true
+                show:
+                  graph: bar
+          - type: custom:mushroom-template-card
+            primary: Service
+            secondary: ''
+            icon: ''
+          - type: horizontal-stack
+            cards:
+              - type: custom:mushroom-template-card
+                primary: Ölwechsel
+                secondary: '{{ states(''sensor.passat_oil_inspection_distance'') }} km'
+                icon: mdi:oil
+                icon_color: >-
+                  {% if states('sensor.passat_oil_inspection_distance') | float
+                  > 2000 %}
+                              green
+                            {% else %}
+                              red
+                            {% endif %}
+                entity: sensor.passat_oil_inspection_distance
+                tap_action:
+                  action: more-info
+              - type: custom:mushroom-template-card
+                primary: Ölwechsel
+                secondary: '{{ states(''sensor.passat_oil_inspection_days'') }} Tage'
+                icon: mdi:map-marker-path
+                icon_color: >-
+                  {% if states('sensor.passat_oil_inspection_days') | float > 60
+                  %}
+                              green
+                            {% else %}
+                              red
+                            {% endif %}
+                entity: sensor.passat_oil_inspection_days
+                tap_action:
+                  action: more-info
+          - type: horizontal-stack
+            cards:
+              - type: custom:mushroom-template-card
+                primary: Inspektion
+                secondary: '{{ states(''sensor.passat_service_inspection_distance'') }} km'
+                icon: mdi:oil
+                icon_color: >-
+                  {% if states('sensor.passat_service_inspection_distance') |
+                  float > 2000 %}
+                              green
+                            {% else %}
+                              red
+                            {% endif %}
+                entity: sensor.passat_service_inspection_distance
+                tap_action:
+                  action: more-info
+              - type: custom:mushroom-template-card
+                primary: Inspektion
+                secondary: '{{ states(''sensor.passat_service_inspection_distance'') }} Tage'
+                icon: mdi:map-marker-path
+                icon_color: >-
+                  {% if states('sensor.passat_service_inspection_distance') |
+                  float > 60 %}
+                              green
+                            {% else %}
+                              red
+                            {% endif %}
+                entity: sensor.passat_service_inspection_distance
+                tap_action:
+                  action: more-info
+  - title: Türen & Fenster
+    path: turen-fenster
+    cards:
+      - type: vertical-stack
+        cards:
+          - type: picture
+            image: /api/image/serve/dbad52eb232487e470857ed9c1157250/512x512
+          - type: custom:mushroom-template-card
+            primary: Fenster
+            secondary: ''
+            icon: ''
+          - type: horizontal-stack
+            cards:
+              - type: custom:mushroom-template-card
+                primary: Vorn Links
+                secondary: >-
+                  {% if states('binary_sensor.passat_window_closed_left_front')
+                  == 'off' %}
+                              Geschlossen
+                            {% else %}
+                              OFFEN
+                            {% endif %}
+                icon: >-
+                  {% if states('binary_sensor.passat_window_closed_left_front')
+                  == 'off' %}
+                              mdi:check
+                            {% else %}
+                              mdi:alert
+                            {% endif %}
+                icon_color: >-
+                  {% if states('binary_sensor.passat_window_closed_left_front')
+                  == 'off' %}
+                              green
+                            {% else %}
+                              red
+                            {% endif %}
+                entity: binary_sensor.passat_window_closed_left_front
+                tap_action:
+                  action: more-info
+              - type: custom:mushroom-template-card
+                primary: Vorn Rechts
+                secondary: >-
+                  {% if states('binary_sensor.passat_window_closed_right_front')
+                  == 'off' %}
+                              Geschlossen
+                            {% else %}
+                              OFFEN
+                            {% endif %}
+                icon: >-
+                  {% if states('binary_sensor.passat_window_closed_right_front')
+                  == 'off' %}
+                              mdi:check
+                            {% else %}
+                              mdi:alert
+                            {% endif %}
+                icon_color: >-
+                  {% if states('binary_sensor.passat_window_closed_right_front')
+                  == 'off' %}
+                              green
+                            {% else %}
+                              red
+                            {% endif %}
+                entity: binary_sensor.passat_window_closed_right_front
+                tap_action:
+                  action: more-info
+          - type: horizontal-stack
+            cards:
+              - type: custom:mushroom-template-card
+                primary: Hinten Links
+                secondary: >-
+                  {% if states('binary_sensor.passat_window_closed_left_back')
+                  == 'off' %}
+                              Geschlossen
+                            {% else %}
+                              OFFEN
+                            {% endif %}
+                icon: >-
+                  {% if states('binary_sensor.passat_window_closed_left_back')
+                  == 'off' %}
+                              mdi:check
+                            {% else %}
+                              mdi:alert
+                            {% endif %}
+                icon_color: >-
+                  {% if states('binary_sensor.passat_window_closed_left_back')
+                  == 'off' %}
+                              green
+                            {% else %}
+                              red
+                            {% endif %}
+                tap_action:
+                  action: more-info
+                entity: binary_sensor.passat_window_closed_left_back
+              - type: custom:mushroom-template-card
+                primary: Hinten Rechts
+                secondary: >-
+                  {% if states('binary_sensor.passat_window_closed_right_back')
+                  == 'off' %}
+                              Geschlossen
+                            {% else %}
+                              OFFEN
+                            {% endif %}
+                icon: >-
+                  {% if states('binary_sensor.passat_window_closed_right_back')
+                  == 'off' %}
+                              mdi:check
+                            {% else %}
+                              mdi:alert
+                            {% endif %}
+                icon_color: >-
+                  {% if states('binary_sensor.passat_window_closed_right_back')
+                  == 'off' %}
+                              green
+                            {% else %}
+                              red
+                            {% endif %}
+                entity: binary_sensor.passat_window_closed_right_back
+                tap_action:
+                  action: more-info
+          - type: custom:mushroom-template-card
+            primary: Türen
+            secondary: ''
+            icon: ''
+          - type: horizontal-stack
+            cards:
+              - type: custom:mushroom-template-card
+                primary: Vorn Links
+                secondary: >-
+                  {% if states('binary_sensor.passat_door_closed_left_front') ==
+                  'off' %}
+                              Geschlossen
+                            {% else %}
+                              OFFEN
+                            {% endif %}
+                icon: >-
+                  {% if states('binary_sensor.passat_door_closed_left_front') ==
+                  'off' %}
+                              mdi:check
+                            {% else %}
+                              mdi:alert
+                            {% endif %}
+                icon_color: >-
+                  {% if states('binary_sensor.passat_door_closed_left_front') ==
+                  'off' %}
+                              green
+                            {% else %}
+                              red
+                            {% endif %}
+                entity: binary_sensor.passat_door_closed_left_front
+                tap_action:
+                  action: more-info
+              - type: custom:mushroom-template-card
+                primary: Vorn Rechts
+                secondary: >-
+                  {% if states('binary_sensor.passat_door_closed_right_front')
+                  == 'off' %}
+                              Geschlossen
+                            {% else %}
+                              OFFEN
+                            {% endif %}
+                icon: >-
+                  {% if states('binary_sensor.passat_door_closed_right_front')
+                  == 'off' %}
+                              mdi:check
+                            {% else %}
+                              mdi:alert
+                            {% endif %}
+                icon_color: >-
+                  {% if states('binary_sensor.passat_door_closed_right_front')
+                  == 'off' %}
+                              green
+                            {% else %}
+                              red
+                            {% endif %}
+                entity: binary_sensor.passat_door_closed_right_front
+                tap_action:
+                  action: more-info
+          - type: horizontal-stack
+            cards:
+              - type: custom:mushroom-template-card
+                primary: Hinten Links
+                secondary: >-
+                  {% if states('binary_sensor.passat_door_closed_left_back') ==
+                  'off' %}
+                              Geschlossen
+                            {% else %}
+                              OFFEN
+                            {% endif %}
+                icon: >-
+                  {% if states('binary_sensor.passat_door_closed_left_back') ==
+                  'off' %}
+                              mdi:check
+                            {% else %}
+                              mdi:alert
+                            {% endif %}
+                icon_color: >-
+                  {% if states('binary_sensor.passat_door_closed_left_back') ==
+                  'off' %}
+                              green
+                            {% else %}
+                              red
+                            {% endif %}
+                tap_action:
+                  action: more-info
+                entity: binary_sensor.passat_door_closed_left_back
+              - type: custom:mushroom-template-card
+                primary: Hinten Rechts
+                secondary: >-
+                  {% if states('binary_sensor.passat_door_closed_right_back') ==
+                  'off' %}
+                              Geschlossen
+                            {% else %}
+                              OFFEN
+                            {% endif %}
+                icon: >-
+                  {% if states('binary_sensor.passat_door_closed_right_back') ==
+                  'off' %}
+                              mdi:check
+                            {% else %}
+                              mdi:alert
+                            {% endif %}
+                icon_color: >-
+                  {% if states('binary_sensor.passat_door_closed_right_back') ==
+                  'off' %}
+                              green
+                            {% else %}
+                              red
+                            {% endif %}
+                entity: binary_sensor.passat_door_closed_right_back
+                tap_action:
+                  action: more-info
+          - type: horizontal-stack
+            cards:
+              - type: custom:mushroom-template-card
+                primary: Kofferraum
+                secondary: |-
+                  {% if states('binary_sensor.passat_trunk_closed') == 'off' %}
+                              Geschlossen
+                            {% else %}
+                              OFFEN
+                            {% endif %}
+                icon: |-
+                  {% if states('binary_sensor.passat_trunk_closed') == 'off' %}
+                              mdi:check
+                            {% else %}
+                              mdi:alert
+                            {% endif %}
+                icon_color: |-
+                  {% if states('binary_sensor.passat_trunk_closed') == 'off' %}
+                              green
+                            {% else %}
+                              red
+                            {% endif %}
+                tap_action:
+                  action: more-info
+                entity: binary_sensor.passat_trunk_closed
+              - type: custom:mushroom-template-card
+                primary: Haube
+                secondary: |-
+                  {% if states('binary_sensor.passat_hood_closed') == 'off' %}
+                              Geschlossen
+                            {% else %}
+                              OFFEN
+                            {% endif %}
+                icon: |-
+                  {% if states('binary_sensor.passat_hood_closed') == 'off' %}
+                              mdi:check
+                            {% else %}
+                              mdi:alert
+                            {% endif %}
+                icon_color: |-
+                  {% if states('binary_sensor.passat_hood_closed') == 'off' %}
+                              green
+                            {% else %}
+                              red
+                            {% endif %}
+                entity: binary_sensor.passat_hood_closed
+                tap_action:
+                  action: more-info
