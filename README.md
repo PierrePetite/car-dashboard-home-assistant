@@ -1,7 +1,7 @@
   <h3 align="center">Car Dashboard</h3>
 
   <p align="center">
-    An easy way to showcase your cars data.
+    An easy way to showcase your cars data with some beautiful mushroom-cards. 
     <br />
    
   </p>
@@ -19,4 +19,16 @@ I am Home Assistant user for years. After buying my new car and having the posib
 
 After having all the datapoints, I worked on my personal dashboard, to show my cars data. 
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+<!-- SETUP -->
+## SETUP
+
+### Prerequisites
+
+- You need to have your cars datapoints available within Home Assistant. 
+- [Mushroom Cards](http://https://github.com/piitaya/lovelace-mushroom "Mushroom Cards") installed
+- [MiniGraphCard](https://github.com/kalkih/mini-graph-cardhttp:// "MiniGraphCard") installed
+
+### Copy-Paste Code
+- Create new Dashboard within Home Assistant
+- Copy-Paste the Raw-YAML-Code
+- Adjust the Entities according to your setup and you corresponsing Car entities
